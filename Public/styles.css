@@ -249,3 +249,19 @@ _:-ms-input-placeholder, :root .demo-graph {
 .error {
   text-align: center;
 }
+.about {
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: 5%;
+}
+.about img {
+  margin-bottom: 5%;
+}
+.search{
+  margin-top: 20%;
+  text-align: center;
+}

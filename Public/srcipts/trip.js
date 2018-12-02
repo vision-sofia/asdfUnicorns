@@ -20,13 +20,13 @@ function getDestination() {
 function callApi() {
     return new Promise((resolve, reject) => {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
+            //navigator.geolocation.getCurrentPosition((position) => {
                 $.ajax({
                     url: "http://localhost:3000/sports/trip",
                     type: "POST",
                     dataType: 'json',
                     data: {
-                        "currentLocation": position.coords.latitude + ',' + position.coords.longitude,
+                        "currentLocation": '42.6668677,23.3733428',
                         "destiantionLocation": destination,
                     }
                 }).done((data) => {
@@ -38,7 +38,7 @@ function callApi() {
                     }
                     resolve();
                 })
-            });
+            //});
         } else {
             console.log("Geolocation is not supported by this browser.");
             reject();

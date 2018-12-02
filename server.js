@@ -23,9 +23,11 @@ app.use(function(req, res, next) {
 const userRouter = require('./routes/userRouter');
 const sportsRouter = require('./routes/sportsRouter');
 const cultureRouter = require('./routes/cultureRouter');
+const searchRouter = require('./routes/searchRouter');
 sportsRouter(app);
 userRouter(app);
 cultureRouter(app);
+searchRouter(app);
 
 app.get("/test", (req, res) => {
   res.send("testing")

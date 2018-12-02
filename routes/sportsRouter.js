@@ -4,4 +4,5 @@ module.exports = function(app) {
 
   app.get('/sports/all', sportsController.getAllSports);
   app.post('/sports/nearest', sportsController.getNearestToMe);
+  app.post('/sports/trip', sportsController.getTripDetails);
 };

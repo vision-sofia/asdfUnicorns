@@ -30,7 +30,12 @@ function callApi() {
                         "destiantionLocation": destination,
                     }
                 }).done((data) => {
-                    tripData = data;
+                    if(data.error) {
+                        $('.step-list').append(`<h2 class="error">${data.error}</h2>`);
+                        reject();
+                    } else {
+                        tripData = data;
+                    }
                     resolve();
                 })
             });
@@ -56,9 +61,9 @@ function generateTripStep(destination, type, departure, arrival, transportName, 
                 </li>`
 }
 
-function generateInfoCard(duration, energyBurntKcal, co2EmissionsKg, departure, arrival) {
+function generateInfoCard(duration, energyBurntKcal, co2EmissionsKg, departure, arrival, cost) {
     return `<div class="mdl-card__supporting-text">
-                Вашето пътуване ще отнеме ${duration} минути. По време на пътуването си ще изгорите ${energyBurntKcal} kCal от ходене и ще отделите ${co2EmissionsKg} кг. CO2.
+                Вашето пътуване ще отнеме ${duration} минути. По време на пътуването си ще изгорите ${energyBurntKcal} kCal от ходене и ще отделите ${co2EmissionsKg} кг. CO2. Пътуването ви ще ви струва ${cost} лв.
             </div>
             <div class="mdl-card__actions mdl-card--border">
                 <span>Заминаване: ${departure} -----  Пристигане: ${arrival}</span>
@@ -74,7 +79,7 @@ function generateTrip() {
     }
     const departure = new Date(tripData.departure);
     const arrival = new Date(tripData.arrival);
-    $('.info-card').append(generateInfoCard(Math.round(tripData.duration/60), tripData.energyBurntKcal, tripData.co2EmissionsKg, departure.toLocaleTimeString(), arrival.toLocaleTimeString()))
+    $('.info-card').append(generateInfoCard(Math.round(tripData.duration/60), tripData.energyBurntKcal, tripData.co2EmissionsKg, departure.toLocaleTimeString(), arrival.toLocaleTimeString(), tripData.fareAmmount))
 }
 
 function init() {
@@ -83,7 +88,7 @@ function init() {
         callApi()
         .then(() => {
             generateTrip();
-        }) 
+        }, () => { }) 
     })
 }
 

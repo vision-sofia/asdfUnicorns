@@ -14,7 +14,7 @@ exports.getNearestToMe = async function(req, res) {
     let nearest = [];
     for(let i = 0; i < allCultures.length; i++) {
         const culture = allCultures[i];
-        if(pointInCircle(culture.latitude, culture.longitude, latitude, longitude, 1)) {
+        if(pointInCircle(culture.latitude, culture.longitude, latitude, longitude, 100)) {
             nearest.push(culture);
         }
     }

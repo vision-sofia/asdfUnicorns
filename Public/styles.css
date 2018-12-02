@@ -246,3 +246,6 @@ _:-ms-input-placeholder, :root .demo-graph {
 .tripInfoTitle {
   background: url('./images/bus3.png') center / cover !important;
 }
+.error {
+  text-align: center;
+}

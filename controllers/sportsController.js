@@ -32,7 +32,7 @@ exports.getTripDetails = function(req, res) {
         let apiCall = `https://api-routes.sofiatraffic.bg/api/v1/trip-guru/?arrive_by=0&from_place=42.66700,23.37356&itineraries_requested_count=1&lang=bg&optimization=fastest&skipped_travel_options=bicycle,taxi,walk&to_place=${destinationLocation}`
         request(apiCall).then((response) => {
             const transportDetails = JSON.parse(response).public_transport_option.itineraries[0];
-            console.log(transportDetails.fare);
+            //console.log(transportDetails.fare);
             if(transportDetails) {
                 tripDetails = {
                     departure: transportDetails.departure_ts,
@@ -48,7 +48,16 @@ exports.getTripDetails = function(req, res) {
                 for(let i = 0; i < transportDetails.legs.length; i++) {
                     const travelStep = transportDetails.legs[i];
                     if(travelStep.travel_mode == 'trolley') {
-                        travelStep.travel_mode = 'railway';
+                        travelStep.travel_mode = 'directions_railway';
+                    }
+                    if(travelStep.travel_mode == 'metro') {
+                        travelStep.travel_mode = 'directions_subway';
+                    }
+                    if(travelStep.travel_mode == 'walk') {
+                        travelStep.travel_mode = 'directions_walk';
+                    }
+                    if(travelStep.travel_mode == 'bus') {
+                        travelStep.travel_mode = 'directions_bus';
                     }
                     tripDetails.travelGuide.push({
                         type: travelStep.travel_mode,
@@ -58,7 +67,7 @@ exports.getTripDetails = function(req, res) {
                         destinationLongitude: travelStep.to_place.longitude,
                         departure: travelStep.departure_ts,
                         arrival: travelStep.arrival_ts,
-                        transportName: travelStep.travel_mode == "walk" ? "крака" : travelStep.public_transport_information.line_name
+                        transportName: travelStep.travel_mode == "directions_walk" ? "крака" : travelStep.public_transport_information.line_name
                     })
                 }
                 res.status(200).send(tripDetails);

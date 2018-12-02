@@ -19,14 +19,14 @@ function getDestination() {
 
 function callApi() {
     return new Promise((resolve, reject) => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
+        //if (navigator.geolocation) {
+        //    navigator.geolocation.getCurrentPosition((position) => {
                 $.ajax({
                     url: "http://localhost:3000/sports/trip",
                     type: "POST",
                     dataType: 'json',
                     data: {
-                        "currentLocation": position.coords.latitude + ',' + position.coords.longitude,
+                        "currentLocation": '42.6668677,23.3733428',
                         "destiantionLocation": destination,
                     }
                 }).done((data) => {
@@ -38,18 +38,18 @@ function callApi() {
                     }
                     resolve();
                 })
-            });
-        } else {
-            console.log("Geolocation is not supported by this browser.");
-            reject();
-        }
+        //    });
+        //} else {
+        //    console.log("Geolocation is not supported by this browser.");
+        //    reject();
+        //}
     })
 }
 
 function generateTripStep(destination, type, departure, arrival, transportName, destinationCoordinates) {
     return `<li class="mdl-list__item mdl-list__item--three-line step">
                     <span class="mdl-list__item-primary-content">
-                    <i class="material-icons">directions_${type}</i>
+                    <i class="material-icons">${type}</i>
                     <span>${destination}</span>
                     <span class="mdl-list__item-text-body">
                         Време на тръгване - ${departure}. Време на пристигане - ${arrival}. Транспорт - ${transportName}
@@ -63,7 +63,7 @@ function generateTripStep(destination, type, departure, arrival, transportName, 
 
 function generateInfoCard(duration, energyBurntKcal, co2EmissionsKg, departure, arrival, cost) {
     return `<div class="mdl-card__supporting-text">
-                Вашето пътуване ще отнеме ${duration} минути. По време на пътуването си ще изгорите ${energyBurntKcal} kCal от ходене и ще отделите ${co2EmissionsKg} кг. CO2. Пътуването ви ще ви струва ${cost} лв.
+                Вашето пътуване ще отнеме ${duration} минути. По време на пътуването си ще изгорите <b>${energyBurntKcal} kCal</b> от ходене и ще отделите <b>${co2EmissionsKg} кг. CO2</b>. Пътуването ви ще ви струва <b>${cost} лв</b>.
             </div>
             <div class="mdl-card__actions mdl-card--border">
                 <span>Заминаване: ${departure} -----  Пристигане: ${arrival}</span>

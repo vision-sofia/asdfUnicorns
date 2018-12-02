@@ -18,49 +18,49 @@ function getInformationCard(id, name, address, neighbourhood = "", type, coordin
 
 function getNearbySportPlaces() {
     return new Promise((resolve, reject) => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
+        //if (navigator.geolocation) {
+            //navigator.geolocation.getCurrentPosition((position) => {
                 $.ajax({
                     url: "http://localhost:3000/sports/nearest",
                     type: "POST",
                     dataType: 'json',
                     data: {
-                        "latitude": position.coords.latitude,
-                        "longitude": position.coords.longitude,
+                        "latitude": '42.6668677',
+                        "longitude": '23.3733428',
                     }
                 }).done((data) => {
                     placesNearby = placesNearby.concat(data);
                     resolve();
                 })
-            });
-        } else {
-            console.log("Geolocation is not supported by this browser.");
-            reject();
-        }
+           // });
+        //} else {
+        //    console.log("Geolocation is not supported by this browser.");
+        //    reject();
+        //}
     })
 }
 
 function getNearbyCulturePlaces() {
     return new Promise((resolve, reject) => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
+        //if (navigator.geolocation) {
+        //    navigator.geolocation.getCurrentPosition((position) => {
                 $.ajax({
                     url: "http://localhost:3000/culture/nearest",
                     type: "POST",
                     dataType: 'json',
                     data: {
-                        "latitude": position.coords.latitude,
-                        "longitude": position.coords.longitude,
+                        "latitude": '42.6668677',
+                        "longitude": '23.3733428',
                     }
                 }).done((data) => {
                     placesNearby = placesNearby.concat(data);
                     resolve();
                 })
-            });
-        } else {
-            console.log("Geolocation is not supported by this browser.");
-            reject();
-        }
+        //    });
+        //} else {
+        //    console.log("Geolocation is not supported by this browser.");
+        //    reject();
+        //}
     })
 }
 
